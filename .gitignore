@@ -1,0 +1,26 @@
+# secrets
+.env
+
+# data (large, licensed separately) and build artifacts
+data_subset10/
+*.sqlite
+*.tar.gz
+
+# run artifacts: keep curated examples in docs/, ignore raw runs
+runs/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+
+# interview brief contains the endpoint key; keep it out of the repo
+*.docx

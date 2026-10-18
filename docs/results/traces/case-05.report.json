@@ -1,0 +1,70 @@
+{
+ "diagnosis": "Severe multi-vessel coronary artery disease",
+ "differential_diagnoses": [
+  {
+   "name": "Acute coronary syndrome",
+   "why": "Considered due to the potential for plaque rupture in severe CAD, but imaging primarily demonstrates chronic, heavy calcification and stenosis rather than acute thrombus or specific signs of acute infarction.",
+   "confidence": 0.3
+  },
+  {
+   "name": "Aortic dissection",
+   "why": "Considered in the differential for chest pain, but CT angiography explicitly ruled out aortic pathology.",
+   "confidence": 0.01
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Severe coronary artery calcification with Agatston score of 1881.8. LAD: 849.0, RCA: 892.4, CX: 106.6, LM: 33.8. Total lesions: 21.",
+   "source": "study_findings",
+   "evidence_refs": [
+    "img:69160226"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Coronary CT angiography shows severe multi-vessel coronary artery disease. LAD: 94% stenosis with significant plaque burden.",
+   "source": "image",
+   "evidence_refs": [
+    "img:69275768",
+    "img:69275769",
+    "img:69275770",
+    "img:69275771",
+    "img:69275772",
+    "img:69275773"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "RCA: 91% stenosis.",
+   "source": "image",
+   "evidence_refs": [
+    "img:69275768",
+    "img:69275769",
+    "img:69275770",
+    "img:69275771",
+    "img:69275772",
+    "img:69275773"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "LCX: significant stenosis.",
+   "source": "image",
+   "evidence_refs": [
+    "img:69275768",
+    "img:69275769",
+    "img:69275770",
+    "img:69275771",
+    "img:69275772",
+    "img:69275773"
+   ],
+   "confidence": 0.95
+  }
+ ],
+ "uncertainty": [
+  "None - imaging findings are definitive for severe multi-vessel CAD"
+ ],
+ "next_best_check": "Cardiology consultation for possible coronary angiography and revascularization planning (PCI or CABG given multi-vessel disease)",
+ "trace_id": "3a5be7be46a6",
+ "degraded": false
+}

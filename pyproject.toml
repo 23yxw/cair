@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cair-agent"
+version = "0.1.0"
+description = "Multimodal medical diagnosis agent: VLM controller + deterministic imaging tools + evidence ledger"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "openai>=1.40",
+    "pydantic>=2.5",
+    "Pillow>=10.0",
+    "numpy>=1.24",
+    "SQLAlchemy>=2.0",
+    "typer>=0.12",
+    "tenacity>=8.2",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+cair-agent = "cair_agent.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["cair_agent*"]
+
+[tool.setuptools.package-data]
+"cair_agent.agent.prompts" = ["*.md"]
+"cair_agent.data" = ["*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

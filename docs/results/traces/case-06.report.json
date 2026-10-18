@@ -1,0 +1,57 @@
+{
+ "diagnosis": "Fibroadenoma",
+ "differential_diagnoses": [
+  {
+   "name": "Phyllodes tumor",
+   "why": "Phyllodes tumors can mimic fibroadenomas with well-circumscribed, oval masses. However, they are typically larger, grow more rapidly, and may show internal heterogeneity or cystic spaces. The classic benign features and stable appearance here make fibroadenoma more likely.",
+   "confidence": 0.1
+  },
+  {
+   "name": "Invasive ductal carcinoma",
+   "why": "Malignancy is unlikely given the well-circumscribed margins, oval shape, parallel orientation (wider than tall), and absence of spiculation, microcalcifications, or posterior acoustic shadowing. These features are strongly associated with benign pathology.",
+   "confidence": 0.02
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Mammography shows a well-circumscribed, oval, hyperdense mass in the right breast without calcifications or architectural distortion.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74487658"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Ultrasound shows a well-circumscribed, oval, hypoechoic mass measuring approximately 29.7 x 14.0 mm with parallel orientation.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74487659"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Ultrasound elastography shows a mixed stiffness pattern with a hardness index of 26%.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74487660"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "The mass demonstrates benign imaging features including well-circumscribed margins, oval shape, parallel orientation, and absence of suspicious calcifications or spiculation.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74487658",
+    "img:74487659",
+    "img:74487660"
+   ],
+   "confidence": 0.9
+  }
+ ],
+ "uncertainty": [
+  "Histologic confirmation is required to definitively exclude phyllodes tumor, as imaging features can overlap."
+ ],
+ "next_best_check": "Core needle biopsy",
+ "trace_id": "d430c7c5e2cf",
+ "degraded": false
+}

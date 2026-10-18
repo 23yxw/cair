@@ -1,0 +1,69 @@
+{
+ "diagnosis": "Localized bladder cancer without evidence of bone metastases",
+ "differential_diagnoses": [
+  {
+   "name": "Metastatic bladder cancer",
+   "why": "Bladder cancer has a propensity for bone metastasis, particularly in advanced stages. However, the available thoracic spine CT and bone scan show no lytic, sclerotic, or hypermetabolic lesions. This diagnosis is less likely due to the negative imaging in the visualized regions, though it cannot be fully excluded without pelvic imaging.",
+   "confidence": 0.25
+  },
+  {
+   "name": "Degenerative bone disease",
+   "why": "Common in a 70-year-old male, but the CT images specifically note preserved vertebral body heights, alignment, and trabecular patterns without obvious degenerative changes or fractures in the visualized thoracic spine.",
+   "confidence": 0.1
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Nuclear medicine bone scan shows intense physiological radiotracer uptake in the bladder region. No obvious focal skeletal hypermetabolic lesions identified on this limited view.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75151128"
+   ],
+   "confidence": 0.6
+  },
+  {
+   "fact": "CT bone window of thoracic spine (axial, sagittal, coronal) shows no lytic or sclerotic bone lesions, no vertebral compression fractures, and preserved bone architecture throughout the visualized spine.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75151129",
+    "img:75151195",
+    "img:75151244"
+   ],
+   "confidence": 0.8
+  },
+  {
+   "fact": "CT axial bone window shows thoracic vertebral bodies with preserved cortical margins and trabecular pattern, with no obvious lytic or sclerotic lesions.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75151162"
+   ],
+   "confidence": 0.8
+  },
+  {
+   "fact": "CT sagittal bone window shows thoracic spine with preserved vertebral body heights, alignment, and disc spaces, with no compression fractures or destructive lesions.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75151195",
+    "img:75151243"
+   ],
+   "confidence": 0.8
+  },
+  {
+   "fact": "CT coronal bone window shows thoracic spine with preserved alignment and vertebral body morphology, with no obvious metastatic lesions in the visualized spine or posterior elements.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75151244",
+    "img:75151292"
+   ],
+   "confidence": 0.8
+  }
+ ],
+ "uncertainty": [
+  "Imaging is limited to the thoracic spine; the pelvis and lumbar spine (common sites for bladder cancer metastasis) were not visualized.",
+  "Bone scan was a single representative view with limited resolution, potentially missing small focal lesions.",
+  "Primary bladder tumor status and regional lymph node involvement cannot be assessed from the provided skeletal imaging."
+ ],
+ "next_best_check": "CT of the abdomen and pelvis with contrast to evaluate the primary bladder tumor, regional lymph nodes, and to complete the staging of the pelvis and lumbar spine for metastatic disease.",
+ "trace_id": "a4728d70f671",
+ "degraded": false
+}

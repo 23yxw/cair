@@ -1,0 +1,56 @@
+{
+ "diagnosis": "Fibromatosis (Desmoid Tumor) of the breast",
+ "differential_diagnoses": [
+  {
+   "name": "Fibroadenoma",
+   "why": "Considered because it is a common benign breast mass that can appear well-circumscribed on imaging. However, it is less likely because fibroadenomas typically show biphasic proliferation of epithelial and stromal elements rather than the pure spindle cell proliferation with sweeping fascicles seen here, and they do not exhibit strong nuclear Beta-catenin positivity.",
+   "confidence": 0.03
+  },
+  {
+   "name": "Phyllodes tumor",
+   "why": "Considered due to the presence of a spindle cell stromal component. However, it is less likely because phyllodes tumors characteristically display a leaf-like architecture with stromal overgrowth and hypercellularity, and Beta-catenin is not a defining diagnostic feature for this entity.",
+   "confidence": 0.02
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Mammography shows a well-circumscribed, oval, hyperdense mass in the left breast.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74884507",
+    "img:74884427"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Ultrasound shows a solid, hypoechoic, oval mass with circumscribed margins, oriented parallel to the skin.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74884529",
+    "img:74884530"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Pathology (H&E) shows a well-circumscribed proliferation of bland spindle cells arranged in long, sweeping fascicles with tapered nuclei and eosinophilic cytoplasm, infiltrating breast adipose tissue.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74884531",
+    "img:74884532"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Pathology (IHC) shows strong nuclear and cytoplasmic positivity for Beta-catenin in the spindle cells.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74884533"
+   ],
+   "confidence": 1.0
+  }
+ ],
+ "uncertainty": [],
+ "next_best_check": null,
+ "trace_id": "6b20bb0be13b",
+ "degraded": false
+}

@@ -1,0 +1,59 @@
+{
+ "diagnosis": "Epiphrenic Diverticulum",
+ "differential_diagnoses": [
+  {
+   "name": "Hiatal Hernia",
+   "why": "Hiatal hernias are common in the distal esophagus and can coexist with epiphrenic diverticula. However, the imaging clearly demonstrates a distinct sac-like outpouching with stasis rather than just herniation of the stomach, making a primary diagnosis of hiatal hernia less likely as the sole explanation for the diverticulum.",
+   "confidence": 0.05
+  },
+  {
+   "name": "Zenker's Diverticulum",
+   "why": "Zenker's diverticulum is a pharyngoesophageal diverticulum located in the proximal esophagus. The imaging explicitly rules out proximal pathology and Zenker's diverticulum, locating the lesion instead in the distal esophagus.",
+   "confidence": 0.0
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Barium swallow shows a distal esophageal diverticulum.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75306160",
+    "img:75306161"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "The diverticulum is located just above the gastroesophageal junction, projecting to the right in the RAO view and posteriorly/laterally in the LAO view.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75306160",
+    "img:75306161"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "The diverticulum contains barium and air bubbles, indicating stasis.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75306160"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "No evidence of proximal esophageal pathology or Zenker's diverticulum.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75306160",
+    "img:75306161"
+   ],
+   "confidence": 0.9
+  }
+ ],
+ "uncertainty": [
+  "Underlying esophageal motility disorder (e.g., achalasia, diffuse esophageal spasm) is not confirmed without manometry.",
+  "The specific histological nature (true vs. false diverticulum) is not definitively established by imaging alone, though epiphrenic diverticula are typically pulsion diverticula."
+ ],
+ "next_best_check": "Esophageal manometry",
+ "trace_id": "42dc75038323",
+ "degraded": false
+}

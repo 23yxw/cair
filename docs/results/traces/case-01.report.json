@@ -1,0 +1,88 @@
+{
+ "diagnosis": "Acute appendicitis",
+ "differential_diagnoses": [
+  {
+   "name": "Cecal diverticulitis",
+   "why": "Can present with similar right lower quadrant pain and fever, but imaging specifically identifies the appendix as the inflamed structure rather than cecal diverticula.",
+   "confidence": 0.03
+  },
+  {
+   "name": "Mesenteric adenitis",
+   "why": "Typically presents with enlarged lymph nodes in the right lower quadrant rather than a specific tubular structure with wall thickening and fat stranding.",
+   "confidence": 0.01
+  },
+  {
+   "name": "Ureteral stone",
+   "why": "Can cause right lower quadrant pain, but fever is less typical unless infected, and no hydronephrosis or ureteral stone was seen on CT.",
+   "confidence": 0.01
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Axial CT shows a tubular structure in the right lower quadrant with wall thickening and surrounding fat stranding, consistent with an inflamed appendix.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75311918",
+    "img:75311980",
+    "img:75312041",
+    "img:75312103",
+    "img:75312165",
+    "img:75312226",
+    "img:75312288",
+    "img:75312349",
+    "img:75312411",
+    "img:75312473",
+    "img:75312534",
+    "img:75312596"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "Coronal and sagittal CT views confirm a dilated, thick-walled tubular structure in the right lower quadrant with surrounding fat stranding, consistent with acute appendicitis. No free air or large abscess seen.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75312661",
+    "img:75312695",
+    "img:75312730",
+    "img:75312764",
+    "img:75312798",
+    "img:75312833",
+    "img:75312867",
+    "img:75312902",
+    "img:75312936",
+    "img:75312970",
+    "img:75313005",
+    "img:75313039",
+    "img:75313137",
+    "img:75313179",
+    "img:75313221",
+    "img:75313263",
+    "img:75313305",
+    "img:75313347",
+    "img:75313388",
+    "img:75313430",
+    "img:75313472",
+    "img:75313514",
+    "img:75313556",
+    "img:75313598"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "Annotated ultrasound confirms a dilated, thick-walled appendix adjacent to the cecum. A hypoechoic mass (likely appendicolith or inflammatory phlegmon) is noted within or adjacent to the appendix.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75331328",
+    "img:75331329",
+    "img:75331330"
+   ],
+   "confidence": 0.95
+  }
+ ],
+ "uncertainty": [
+  "The hypoechoic mass seen on ultrasound is likely an appendicolith or inflammatory phlegmon, but definitive characterization would require further imaging or pathology."
+ ],
+ "next_best_check": null,
+ "trace_id": "3994f1bf708c",
+ "degraded": false
+}

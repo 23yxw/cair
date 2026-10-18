@@ -1,0 +1,49 @@
+{
+ "diagnosis": "Bilateral Slipped Capital Femoral Epiphysis",
+ "differential_diagnoses": [
+  {
+   "name": "Legg-Calvé-Perthes Disease",
+   "why": "Considered due to hip pain and limp in a pediatric patient. However, it is less likely because it typically affects younger children (4-8 years) and presents with femoral head fragmentation or sclerosis rather than the physeal widening and epiphyseal displacement seen here.",
+   "confidence": 0.05
+  },
+  {
+   "name": "Septic Arthritis",
+   "why": "Considered due to acute inability to bear weight. However, it is less likely given the chronic history of pain and limp, and the absence of radiographic signs such as joint space narrowing or periarticular osteopenia. The specific deformity of slipped epiphysis is not characteristic of septic arthritis.",
+   "confidence": 0.0
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Bilateral hip abnormalities with right femoral head epiphysis displaced inferiorly and posteriorly relative to the femoral neck, widened physis, and decreased neck-shaft angle (coxa vara).",
+   "source": "image",
+   "evidence_refs": [
+    "img:74762948"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Post-operative X-rays demonstrate screw fixation in both hips, consistent with in-situ pinning for SCFE.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74762949",
+    "img:74762950"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Annotated measurements show a neck-shaft angle of 81 degrees in the right hip (coxa vara) and 146 degrees in the left hip.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74763519"
+   ],
+   "confidence": 0.95
+  }
+ ],
+ "uncertainty": [
+  "The case is in a post-operative status, so the acute clinical presentation has been addressed surgically.",
+  "The severity of the slip appears more pronounced on the right side compared to the left, evidenced by the greater degree of coxa vara and the use of multiple screws versus a single cannulated screw."
+ ],
+ "next_best_check": null,
+ "trace_id": "af2e34171c6c",
+ "degraded": false
+}

@@ -1,0 +1,68 @@
+{
+ "diagnosis": "Currarino syndrome",
+ "differential_diagnoses": [
+  {
+   "name": "Presacral enteric cyst",
+   "why": "Enteric cysts are a component of the Currarino triad and present as presacral masses. However, they typically do not show contrast enhancement or filling, whereas the CT findings suggest contrast filling or a thick enhancing wall, making this less likely than a meningocele.",
+   "confidence": 0.2
+  },
+  {
+   "name": "Tailgut cyst (retrorectal cystic hamartoma)",
+   "why": "These are common presacral cysts in adults but are rare in children. They do not typically present with the specific sacral bony defect (scimitar sacrum) or anorectal malformations seen in this case.",
+   "confidence": 0.05
+  },
+  {
+   "name": "Sacrococcygeal teratoma",
+   "why": "While these are common presacral masses in neonates, they usually contain mixed solid and cystic components with calcifications. The imaging here describes a well-defined cystic mass without mention of calcification or solid elements.",
+   "confidence": 0.05
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Severe hypospadias/perineal urethral opening with hypoplastic/bifid scrotum",
+   "source": "image",
+   "evidence_refs": [
+    "img:75785994",
+    "img:75785995"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Large, well-defined, hyperintense cystic mass in the presacral/retrorectal space on MRI T2, compressing the rectum anteriorly",
+   "source": "image",
+   "evidence_refs": [
+    "img:75785947",
+    "img:75785949",
+    "img:75785952",
+    "img:75785954",
+    "img:75785956",
+    "img:75785958",
+    "img:75785961",
+    "img:75785963"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "CT delayed phase shows high density in the presacral cystic mass, suggesting contrast filling or a thick enhancing wall",
+   "source": "image",
+   "evidence_refs": [
+    "img:75784406"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "fact": "Scimitar sacrum (sacral bony defect in lower sacral segments) on CT bone window",
+   "source": "image",
+   "evidence_refs": [
+    "img:75784255"
+   ],
+   "confidence": 0.85
+  }
+ ],
+ "uncertainty": [
+  "While the enhancement pattern favors an anterior sacral meningocele over an enteric cyst, definitive histological confirmation would require surgical pathology."
+ ],
+ "next_best_check": null,
+ "trace_id": "f2124dca5a4e",
+ "degraded": false
+}

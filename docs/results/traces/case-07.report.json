@@ -1,0 +1,78 @@
+{
+ "diagnosis": "Complete patellar tendon tear",
+ "differential_diagnoses": [
+  {
+   "name": "Sinding-Larsen-Johansson syndrome",
+   "why": "Considered due to the presence of an ossicle at the inferior patella seen on X-ray and edema on MRI. However, it is less likely because MRI demonstrates complete discontinuity of the tendon with high signal filling the gap, which represents a structural rupture rather than the apophysitis/inflammation characteristic of SLJ syndrome.",
+   "confidence": 0.05
+  },
+  {
+   "name": "Patellar tendinopathy with partial tear",
+   "why": "Considered as a spectrum of patellar tendon injury. However, it is less likely because the imaging evidence (MRI axial and sagittal views) shows complete disruption of the tendon fibers with a gap filled by fluid/high signal, rather than just intrasubstance degeneration or a partial defect.",
+   "confidence": 0.03
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "X-ray frontal view shows normal alignment of the left knee with preserved joint spaces and no obvious fracture or dislocation.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705791"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "X-ray lateral view shows a small ossicle located inferior to the patella at the patellar tendon insertion site.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705792"
+   ],
+   "confidence": 0.8
+  },
+  {
+   "fact": "MRI sagittal PD fat-sat shows high signal intensity (edema) at the inferior pole of the patella with disruption of the patellar tendon insertion and surrounding soft tissue edema.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705860"
+   ],
+   "confidence": 0.85
+  },
+  {
+   "fact": "MRI sagittal PD fat-sat contact sheet shows extensive high signal in the anterior knee region with disruption of the patellar tendon, consistent with a complete tear.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705845",
+    "img:74705849",
+    "img:74705853",
+    "img:74705857",
+    "img:74705862",
+    "img:74705866",
+    "img:74705870",
+    "img:74705874"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "MRI axial PD fat-sat shows extensive anterior soft tissue edema with disruption of the patellar tendon, appearing discontinuous with high signal filling the gap.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705926"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "fact": "MRI coronal PD fat-sat shows normal alignment of the knee joint with preserved joint spaces and no obvious meniscal tear or ligamentous injury.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74705806"
+   ],
+   "confidence": 0.8
+  }
+ ],
+ "uncertainty": [
+  "The ossicle at the inferior patella on X-ray may represent a chronic change from prior Sinding-Larsen-Johansson syndrome or an acute avulsion fragment associated with the tear, though the complete tendon discontinuity dominates the clinical picture."
+ ],
+ "next_best_check": null,
+ "trace_id": "922c56a5ebe9",
+ "degraded": false
+}

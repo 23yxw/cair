@@ -1,0 +1,55 @@
+{
+ "diagnosis": "Lumbosacral transitional vertebra (Castellvi type IIIb) with severe lumbosacral kyphosis, status post posterior spinal fusion",
+ "differential_diagnoses": [
+  {
+   "name": "Congenital lumbosacral kyphosis",
+   "why": "While the kyphosis may have a congenital component, the specific morphological finding of L5 sacralization (Castellvi type IIIb) provides a more precise anatomical diagnosis than the general category of congenital kyphosis.",
+   "confidence": 0.05
+  },
+  {
+   "name": "Ankylosing spondylitis",
+   "why": "Although ankylosing spondylitis causes spinal fusion and kyphosis, the fusion here is localized to the lumbosacral junction with specific transitional vertebra morphology, and the upper lumbar spine appears spared, making this less likely.",
+   "confidence": 0.05
+  }
+ ],
+ "key_findings": [
+  {
+   "fact": "Complete bony fusion of L5 to the sacrum (sacralization) with no distinct L5-S1 disc space or facet joints, forming a single bony block.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74107733",
+    "img:74107734"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Severe lumbosacral kyphosis at the lumbosacral junction measuring 70.5 degrees.",
+   "source": "image",
+   "evidence_refs": [
+    "img:75013145"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "Presence of posterior spinal instrumentation (pedicle screws and rods) spanning the lumbosacral junction, indicating prior surgical fusion.",
+   "source": "image",
+   "evidence_refs": [
+    "img:74107738",
+    "img:74107739"
+   ],
+   "confidence": 1.0
+  },
+  {
+   "fact": "45-year-old female presenting with chronic low back pain.",
+   "source": "patient_text",
+   "evidence_refs": [
+    "text:profile:case-10"
+   ],
+   "confidence": 1.0
+  }
+ ],
+ "uncertainty": [],
+ "next_best_check": null,
+ "trace_id": "1afdd702a92c",
+ "degraded": false
+}
