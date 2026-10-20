@@ -46,8 +46,13 @@ class SqlCaseRepository(CaseRepository):
         self.audit: List[Dict[str, Any]] = []
 
     @classmethod
-    def from_sqlite(cls, path: Path) -> "SqlCaseRepository":
+    def from_sqlite(cls, path: Path, index_path: Optional[Path] = None) -> "SqlCaseRepository":
+        """Open the read-only SQLite backend. When index_path is given and the db is missing, build it first."""
         p = Path(path).resolve()
+        if not p.exists() and index_path is not None and Path(index_path).exists():
+            from .build_sqlite import build_sqlite
+            from .index import load_index
+            build_sqlite(load_index(index_path), p)
         if not p.exists():
             raise FileNotFoundError(f"sqlite db not found: {p}; run `build-db` first")
         # mode=ro makes the connection itself read-only at the SQLite level

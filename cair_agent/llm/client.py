@@ -52,7 +52,8 @@ class StepResult:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     latency_s: float = 0.0
-    reasoning_chars: int = 0  # length of hidden reasoning (thinking models); content itself is not stored
+    reasoning_chars: int = 0  # length of hidden reasoning (thinking models)
+    reasoning: str = ""  # hidden reasoning text; callers decide whether to trace it
 
 
 def _is_retryable_status(e: BaseException) -> bool:
@@ -104,7 +105,7 @@ class LLMClient:
         msg = resp.choices[0].message
         u = resp.usage
         reasoning = getattr(msg, "reasoning_content", None) or (msg.model_extra or {}).get("reasoning_content") or ""
-        res = StepResult(content=msg.content, latency_s=dt, reasoning_chars=len(reasoning),
+        res = StepResult(content=msg.content, latency_s=dt, reasoning_chars=len(reasoning), reasoning=reasoning or "",
                          prompt_tokens=(u.prompt_tokens if u else 0), completion_tokens=(u.completion_tokens if u else 0))
         raw: Dict[str, Any] = {"role": "assistant", "content": msg.content}
         if getattr(msg, "tool_calls", None):

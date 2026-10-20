@@ -170,7 +170,7 @@ class Hypothesis(BaseModel):
 
 
 class UpdateHypothesesArgs(BaseModel):
-    hypotheses: List[Hypothesis] = Field(min_length=1, max_length=6)
+    hypotheses: List[Hypothesis] = Field(min_length=2, max_length=6)
     note: str = Field(default="", description="what changed since the last update and why")
 
 
@@ -196,6 +196,8 @@ class CriticResult(BaseModel):
     issues: List[CriticIssue] = Field(default_factory=list)
     decision: Literal["finalize", "revisit"]
     suggested_action: Optional[str] = Field(default=None, description="what to look at next if revisit")
+    confirmed: bool = False  # True only when the blind read accepts the submitted diagnosis
+    unavailable: bool = False  # True when the image read produced no answer
 
 
 class DiagnosisReport(BaseModel):

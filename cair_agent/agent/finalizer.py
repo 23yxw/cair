@@ -42,6 +42,43 @@ def template_report(candidate: Optional[FinishArgs], ledger: EvidenceLedger, tra
     )
 
 
+def withhold_diagnosis(report: DiagnosisReport, candidate: str, reason: str) -> DiagnosisReport:
+    """Replace a specific diagnosis that was not independently confirmed.
+
+    The candidate stays in uncertainty. discussion.txt is never an input here.
+    """
+    note = f"Unconfirmed candidate (not a clinical conclusion): {candidate}. {reason}"
+    if report.diagnosis != "undetermined":
+        report.uncertainty.append(note)
+        report.diagnosis = "undetermined"
+    elif note not in report.uncertainty:
+        report.uncertainty.append(note)
+    report.degraded = True
+    return report
+
+
+def constrain_report(rep: DiagnosisReport, candidate: FinishArgs, ledger: EvidenceLedger) -> DiagnosisReport:
+    """The diagnosis string is the candidate's. Each key finding must copy one ledger claim."""
+    rep.diagnosis = candidate.diagnosis
+    by_claim = {}
+    for e in ledger.entries:
+        by_claim.setdefault(e.claim, e)
+    kept = []
+    for kf in rep.key_findings:
+        e = by_claim.get(kf.fact)
+        if e is None:
+            continue
+        allowed = {r.key() for r in e.evidence_refs}
+        if not kf.evidence_refs or not set(kf.evidence_refs).issubset(allowed):
+            continue
+        kf.source = e.source
+        kept.append(kf)
+    if not kept:
+        return template_report(candidate, ledger, rep.trace_id)
+    rep.key_findings = kept
+    return rep
+
+
 def run_finalizer(llm: LLMClient, ledger: EvidenceLedger, candidate: FinishArgs, critic: Optional[CriticResult],
                   trace_id: str, trace=None) -> DiagnosisReport:
     version, system = load_prompt("finalizer")
@@ -67,7 +104,7 @@ def run_finalizer(llm: LLMClient, ledger: EvidenceLedger, candidate: FinishArgs,
                 rep = DiagnosisReport.model_validate(obj)
                 for kf in rep.key_findings:
                     ledger.validate_keys(kf.evidence_refs)
-                return rep
+                return constrain_report(rep, candidate, ledger)
             except (ValidationError, LedgerError) as e:
                 err = str(e)
         messages.append({"role": "assistant", "content": res.content or ""})

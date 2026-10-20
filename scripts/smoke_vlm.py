@@ -26,7 +26,15 @@ load_dotenv()
 import os  # noqa: E402
 
 MODEL = os.environ.get("CAIR_MODEL", "Qwen3.6-35B-A3B")
-DEFAULT_IMG = Path("data_subset10/appendiceal-intussusception-8/study-181355-ct/749261-axial-c-portal-venous-phase/0339-75312257.jpg")
+
+
+def default_image() -> Path:
+    """First jpg/png under CAIR_DATA_DIR, so the script works on any unpacked dataset."""
+    data_dir = Path(os.environ.get("CAIR_DATA_DIR", "./data_subset10"))
+    for pattern in ("**/*.jpg", "**/*.jpeg", "**/*.png"):
+        for p in sorted(data_dir.glob(pattern)):
+            return p
+    sys.exit(f"no image found under {data_dir}; pass an image path: python scripts/smoke_vlm.py path/to/image.jpg")
 
 
 def data_url(path: Path) -> str:
@@ -41,8 +49,10 @@ def report(name: str, t0: float, resp) -> None:
 
 
 def main() -> int:
+    if not os.environ.get("OPENAI_BASE_URL") or not os.environ.get("OPENAI_API_KEY"):
+        sys.exit("OPENAI_BASE_URL and OPENAI_API_KEY are not set. Copy .env.example to .env and fill them in.")
     client = OpenAI(timeout=120)
-    img_path = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_IMG
+    img_path = Path(sys.argv[1]) if len(sys.argv) > 1 else default_image()
 
     # 1. text only
     t0 = time.time()

@@ -41,6 +41,44 @@ def sampled_studies(events: List[Dict[str, Any]], repo: CaseRepository) -> Set[s
     return out
 
 
+def sampling_metrics(events: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Sheet-only direct claims, and the share of listed series opened at full resolution."""
+    sheet_ids: Set[str] = set()
+    full_ids: Set[str] = set()
+    full_series: Set[str] = set()
+    listed: Set[str] = set()
+    for e in events:
+        if e.get("type") != "tool_result" or e.get("error"):
+            continue
+        data = e.get("data") or {}
+        if e.get("name") == "list_series":
+            for se in data.get("series") or []:
+                if se.get("series_id"):
+                    listed.add(se["series_id"])
+        elif e.get("name") == "sample_images":
+            ids = [str(i) for i in (e.get("image_ids") or [])]
+            sid = data.get("series_id")
+            if data.get("as_contact_sheet"):
+                sheet_ids.update(ids)
+            else:
+                full_ids.update(ids)
+                if sid:
+                    full_series.add(sid)
+        elif e.get("name") == "zoom_image":
+            full_ids.update(str(i) for i in (e.get("image_ids") or []))
+            if data.get("series_id"):
+                full_series.add(data["series_id"])
+    sheet_only = 0
+    for e in events:
+        if e.get("type") != "evidence_added" or e.get("support") != "direct" or e.get("source") != "image":
+            continue
+        ids = [str(r.get("image_id")) for r in (e.get("evidence_refs") or []) if r.get("image_id")]
+        if ids and all(i in sheet_ids and i not in full_ids for i in ids):
+            sheet_only += 1
+    coverage = round(len(listed & full_series) / len(listed), 2) if listed else 1.0
+    return {"sheet_only_direct": sheet_only, "full_res_series_coverage": coverage}
+
+
 def evidence_metrics(report: DiagnosisReport, events: List[Dict[str, Any]], repo: CaseRepository, case_id: str) -> Dict[str, Any]:
     seen = seen_keys(events)
     kfs = report.key_findings
@@ -55,6 +93,7 @@ def evidence_metrics(report: DiagnosisReport, events: List[Dict[str, Any]], repo
         "image_backed_findings": img_backed,
         "primary_study_coverage": round(len(primary & sampled) / len(primary), 2) if primary else 1.0,
         "all_study_coverage": round(len({s.study_id for s in studies} & sampled) / len(studies), 2) if studies else 1.0,
+        **sampling_metrics(events),
     }
 
 

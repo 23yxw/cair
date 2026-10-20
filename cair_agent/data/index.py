@@ -140,6 +140,22 @@ def load_index(path: Path) -> CaseIndex:
     return CaseIndex.model_validate_json(Path(path).read_text(encoding="utf-8"))
 
 
+def ensure_index(data_dir: Path, index_path: Path) -> CaseIndex:
+    """Load the case index, building it from data_dir on first use."""
+    index_path = Path(index_path)
+    if index_path.exists():
+        return load_index(index_path)
+    data_dir = Path(data_dir)
+    if not data_dir.is_dir():
+        raise FileNotFoundError(
+            f"dataset not found at {data_dir}. Unpack the case data there, or set CAIR_DATA_DIR in .env to its location.")
+    index = build_index(data_dir)
+    if not index.cases:
+        raise FileNotFoundError(f"no case folders found under {data_dir}")
+    save_index(index, index_path)
+    return index
+
+
 def summarize(index: CaseIndex) -> dict:
     modalities = sorted({s.modality for c in index.cases for s in c.studies})
     return {

@@ -43,8 +43,8 @@ class Settings:
     jpeg_quality: int = 85
     contact_sheet_n: int = 8
 
-    # Context trimming: images older than this many tool rounds are replaced by text placeholders
-    image_keep_rounds: int = 3
+    # How many images stay in the controller context. Sheets are dropped before full-resolution images.
+    image_keep_messages: int = 4
 
     def require_llm(self) -> None:
         if not self.base_url or not self.api_key:

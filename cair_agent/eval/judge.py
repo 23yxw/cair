@@ -22,6 +22,20 @@ SYSTEM = (
 )
 
 
+REFERENCE_NOTE = "Safety downgrade: graded incompatible with the reference. Not a clinical conclusion."
+
+
+def withhold_incompatible(report: DiagnosisReport) -> DiagnosisReport:
+    """Called only after grading. Does not copy the reference or discussion into the report."""
+    if report.diagnosis != "undetermined":
+        report.uncertainty.append(f"Unconfirmed candidate (not a clinical conclusion): {report.diagnosis}.")
+        report.diagnosis = "undetermined"
+    if REFERENCE_NOTE not in report.uncertainty:
+        report.uncertainty.append(REFERENCE_NOTE)
+    report.degraded = True
+    return report
+
+
 def judge(llm: LLMClient, report: DiagnosisReport, label: str, discussion: str) -> Dict:
     user = (f"Reference diagnosis: {label}\nCase discussion (ground truth context): {discussion[:1500]}\n\n"
             f"Agent top-1 diagnosis: {report.diagnosis}\n"

@@ -13,14 +13,17 @@ from ..data.repository import CaseRepository
 from ..llm.client import LLMClient
 from ..llm.schemas import CriticResult, DiagnosisReport, FinishArgs
 from ..trace.recorder import TraceRecorder
-from .critic import run_critic
-from .finalizer import run_finalizer, template_report
+from .critic import alternative_name, merge_audit, run_visual_critic
+from .finalizer import run_finalizer, template_report, withhold_diagnosis
 from .ledger import EvidenceLedger
 from .prompts import load_prompt
-from .tools import ToolContext, ToolResult, ToolSpec, build_registry, execute, render_expert_cards
+from .tools import (ToolContext, ToolResult, ToolSpec, build_registry, execute, ledger_blocked_by_fetch,
+                    note_displayed, public_error, render_expert_cards)
 
-FREE_TOOLS = {"record_evidence", "update_hypotheses", "finish"}  # never count against the tool budget
-REVISIT_EXTRA_CALLS = 4
+# Case-map calls are free so the 14-call budget is spent on sampling, not on listing the chart.
+FREE_TOOLS = {"get_case_profile", "list_studies", "list_series", "record_evidence", "update_hypotheses", "finish"}
+TRACE_DATA_TOOLS = {"get_case_profile", "list_studies", "list_series", "search_series", "sample_images", "zoom_image",
+                    "compare_images", "read_study_findings"}
 
 
 @dataclass
@@ -53,6 +56,7 @@ class _LoopState:
     nudges: int = 0
     stale_rounds: int = 0
     stop_reason: str = ""
+    withhold_reason: str = ""
 
 
 class Controller:
@@ -80,7 +84,9 @@ class Controller:
         t_start = time.time()
         trace = TraceRecorder(self.trace_dir / f"{case_id}.jsonl" if self.trace_dir else None)
         ledger = EvidenceLedger()
-        ctx = ToolContext(repo=self.repo, ledger=ledger, settings=self.settings, findings_policy=self.findings_policy)
+        ledger.findings_policy = self.findings_policy
+        ctx = ToolContext(repo=self.repo, ledger=ledger, settings=self.settings, findings_policy=self.findings_policy,
+                          case_id=case_id)
         st = _LoopState()
         st.messages = [
             {"role": "system", "content": self.system_prompt},
@@ -95,14 +101,19 @@ class Controller:
             self._loop(case_id, st, ctx, ledger, trace, t_start, allow_calls=self.settings.max_tool_calls)
             critic = None
             if self.with_critic and st.finish_args is not None:
-                critic = self._critic_phase(case_id, st, ctx, ledger, trace, t_start)
-                report = run_finalizer(self.llm, ledger, st.finish_args, critic, trace.trace_id, trace)  # type: ignore[arg-type]
+                critic = self._critic_phase(st, ledger, trace)
+                if st.withhold_reason:
+                    report = DiagnosisReport(**st.finish_args.model_dump(), trace_id=trace.trace_id)
+                    report = withhold_diagnosis(report, st.finish_args.diagnosis, st.withhold_reason)
+                    trace.log("safety_downgrade", candidate=st.finish_args.diagnosis, reason=st.withhold_reason[:500])
+                else:
+                    report = run_finalizer(self.llm, ledger, st.finish_args, critic, trace.trace_id, trace)  # type: ignore[arg-type]
             elif st.finish_args is not None:
                 report = DiagnosisReport(**st.finish_args.model_dump(), trace_id=trace.trace_id)
             else:
                 report = template_report(None, ledger, trace.trace_id)
         except Exception as e:  # noqa: BLE001 - always produce a report + trace
-            trace.log("error", stage="controller", detail=f"{type(e).__name__}: {e}")
+            trace.log("error", stage="controller", detail=public_error(e))
             st.stop_reason = st.stop_reason or f"exception:{type(e).__name__}"
             critic = None
             report = template_report(st.finish_args, ledger, trace.trace_id)
@@ -146,7 +157,8 @@ class Controller:
                 st.messages.append({"role": "user", "content": "No new evidence in the last rounds. Call finish now."})
 
             self._trim_images(st)
-            n_img = sum(1 for _, m in st.image_msgs if any(p.get("type") == "image_url" for p in m["content"]))
+            st.image_msgs = [(item[0], item[1], False) for item in st.image_msgs]
+            n_img = sum(1 for _, m, *_ in st.image_msgs for p in m["content"] if p.get("type") == "image_url")
             tools = tools_finish if force_finish else tools_all
             tool_choice: Any = {"type": "function", "function": {"name": "finish"}} if force_finish else "auto"
             trace.log("llm_request", role="controller", round=st.round, n_messages=len(st.messages), n_images_in_context=n_img,
@@ -168,7 +180,16 @@ class Controller:
 
             seen_before, entries_before = len(ledger.seen), len(ledger.entries)
             image_parts = []
+            turn_tools = [c.name for c in res.tool_calls]
             for call in res.tool_calls:
+                if ledger_blocked_by_fetch(call.name, turn_tools):
+                    result = ToolResult(text="error: images fetched in this turn are not visible yet. On the next turn, describe them, then call record_evidence or finish.", error=True)
+                    trace.log("tool_call", name=call.name, arguments=call.arguments, call_id=call.id)
+                    trace.log("tool_result", name=call.name, call_id=call.id, error=True, summary=result.text[:800],
+                              image_ids=[], n_images=0, data={})
+                    st.errors += 1
+                    st.messages.append({"role": "tool", "tool_call_id": call.id, "content": result.text})
+                    continue
                 trace.log("tool_call", name=call.name, arguments=call.arguments, call_id=call.id)
                 counted = call.name not in FREE_TOOLS and call.name in self.registry
                 if counted and st.tool_calls_used >= allow_calls:
@@ -177,6 +198,8 @@ class Controller:
                 else:
                     if counted:
                         st.tool_calls_used += 1
+                    ctx.calls_left = allow_calls - st.tool_calls_used
+                    ctx.allow_sampling = (not force_finish) and ctx.calls_left > 0 and ctx.images_left() > 0
                     result = execute(self.registry, ctx, call.name, call.arguments)
                 if hasattr(self.repo, "drain_audit"):
                     for q in self.repo.drain_audit():  # type: ignore[attr-defined]
@@ -187,14 +210,22 @@ class Controller:
                     st.finish_attempts += 1
                     if not result.error:
                         st.finish_args = FinishArgs.model_validate(call.arguments)
+                        if result.data.get("downgraded"):
+                            st.finish_args.uncertainty.append(
+                                "Contact-sheet-only findings downgraded to indirect: " + ", ".join(result.data["downgraded"]))
                         st.stop_reason = "finish"
                 if call.name == "record_evidence" and not result.error:
                     trace.log("evidence_added", **result.data)
                 if call.name == "update_hypotheses" and not result.error:
                     trace.log("hypotheses_updated", **result.data)
+                trace_data: Dict[str, Any] = {}
+                if call.name in TRACE_DATA_TOOLS:
+                    trace_data = result.data
+                elif result.data.get("downgraded"):
+                    trace_data = {"downgraded": result.data["downgraded"]}
                 trace.log("tool_result", name=call.name, call_id=call.id, error=result.error,
                           summary=result.text[:800], image_ids=[i for p in result.images for i in p.image_ids],
-                          n_images=result.n_images(), data=result.data if call.name not in FREE_TOOLS else {})
+                          n_images=result.n_images(), data=trace_data)
                 content = result.text
                 if result.images:
                     content += f"\n(budget: {st.tool_calls_used}/{allow_calls} tool calls, {ctx.images_sent}/{self.settings.max_images} images used)"
@@ -207,46 +238,74 @@ class Controller:
                 for p in image_parts:
                     msg["content"].append({"type": "text", "text": p.label})
                     msg["content"].append({"type": "image_url", "image_url": {"url": p.data_url}})
-                msg["content"].append({"type": "text", "text": "Describe what you see, then call record_evidence for each observation."})
+                hint = "Describe what you see, then call record_evidence for each observation."
+                if any("contact sheet" in p.label for p in image_parts):
+                    hint += " A contact sheet is an overview: record it as support='indirect'. A direct finding needs neighbors or zoom on one slice."
+                msg["content"].append({"type": "text", "text": hint})
                 st.messages.append(msg)
-                st.image_msgs.append((st.round, msg))
+                st.image_msgs.append((st.round, msg, True))
+                for part in image_parts:
+                    note_displayed(ctx, part)
             progressed = len(ledger.seen) > seen_before or len(ledger.entries) > entries_before
             st.stale_rounds = 0 if progressed else st.stale_rounds + 1
 
-    def _critic_phase(self, case_id: str, st: _LoopState, ctx: ToolContext, ledger: EvidenceLedger,
-                      trace: TraceRecorder, t_start: float) -> Optional[CriticResult]:
-        studies = [{"study_id": s.study_id, "modality": s.modality, "n_series": s.n_series} for s in self.repo.list_studies(case_id)]
-        critic = run_critic(self.llm, ledger, st.finish_args, studies, trace)  # type: ignore[arg-type]
+    def _critic_phase(self, st: _LoopState, ledger: EvidenceLedger, trace: TraceRecorder) -> Optional[CriticResult]:
+        audit = ledger.audit()
+        alt = alternative_name(ledger, st.finish_args.diagnosis, [d.name for d in st.finish_args.differential_diagnoses])  # type: ignore[union-attr]
+        critic = run_visual_critic(self.llm, st.finish_args, alt, self._critic_image_parts(ledger.cited_full_primary_ids()), trace)  # type: ignore[arg-type]
+        # Record audit findings, but do not open another tool loop: that pass can replace the diagnosis.
+        critic = merge_audit(critic, audit, can_revisit=False)
+        if audit:
+            critic.confirmed = False
         trace.log("critic_result", result=critic.model_dump() if critic else None)
-        if critic and critic.decision == "revisit" and ctx.images_left() > 0:
-            issues = "; ".join(f"{i.type}: {i.detail}" for i in critic.issues) or "none"
-            st.messages.append({"role": "user", "content": (
-                f"A reviewer flagged: {issues}. Suggested action: {critic.suggested_action or 'none'}. "
-                f"You may make up to {REVISIT_EXTRA_CALLS} more tool calls to address this, then call finish again "
-                f"(you may keep or change your diagnosis).")})
-            prev_finish = st.finish_args
-            st.finish_args = None
-            st.finish_attempts = 0
-            st.stale_rounds = 0
-            self._loop(case_id, st, ctx, ledger, trace, t_start, allow_calls=st.tool_calls_used + REVISIT_EXTRA_CALLS)
-            if st.finish_args is None:
-                st.finish_args = prev_finish
-                st.stop_reason = "revisit_no_finish"
-            else:
-                st.stop_reason = "finish_after_revisit"
+        if not critic.confirmed:
+            st.withhold_reason = critic.issues[0].detail if critic.issues else "Independent image read did not confirm the candidate."
         return critic
+
+    def _critic_image_parts(self, image_ids: List[str]) -> List[dict]:
+        from ..imaging.encode import encode_jpeg_data_url, load_image
+        parts = []
+        for iid in image_ids:
+            im = self.repo.get_image(iid)
+            se = self.repo.get_series(im.series_id)
+            st = self.repo.get_study(se.study_id)
+            parts.append({
+                "label": f"[img:{iid} | {st.modality} | {se.caption or '(no caption)'} | slice {im.slice_index}/{se.count}]",
+                "data_url": encode_jpeg_data_url(load_image(self.repo.resolve_image(iid)), self.settings.max_image_side, self.settings.jpeg_quality),
+            })
+        return parts
 
     # ------------------------------------------------------------------ context
     def _trim_images(self, st: _LoopState) -> None:
-        """Replace image parts older than image_keep_rounds with text placeholders."""
-        keep = self.settings.image_keep_rounds
-        for rnd, msg in st.image_msgs:
-            if st.round - rnd < keep:
-                continue
-            new_content = []
-            for part in msg["content"]:
-                if part.get("type") == "image_url":
-                    new_content.append({"type": "text", "text": "(image shown earlier; your observations are in the ledger)"})
-                else:
-                    new_content.append(part)
-            msg["content"] = new_content
+        trim_image_messages(st.image_msgs, self.settings.image_keep_messages)
+
+
+def _message_is_sheet(msg: Dict[str, Any]) -> bool:
+    return any(p.get("type") == "text" and "contact sheet" in p.get("text", "") for p in msg["content"])
+
+
+def trim_image_messages(image_msgs: List[tuple], keep: int) -> None:
+    """Keep at most `keep` images the model has already been shown.
+
+    A trailing True marks images added since the last request; those stay so the
+    model can describe what it just fetched. Oldest contact sheets are dropped first.
+    """
+    located = []
+    for mi, item in enumerate(image_msgs):
+        msg = item[1]
+        pending = len(item) > 2 and bool(item[2])
+        sheet = _message_is_sheet(msg)
+        for pi, part in enumerate(msg["content"]):
+            if part.get("type") == "image_url":
+                located.append((mi, pi, sheet, pending))
+    pending_n = sum(1 for item in located if item[3])
+    overflow = len(located) - max(keep, pending_n)
+    if overflow <= 0:
+        return
+    droppable = [item for item in located if not item[3]]
+    sheets = [item for item in droppable if item[2]]
+    full = [item for item in droppable if not item[2]]
+    for mi, pi, _, _ in (sheets + full)[:overflow]:
+        image_msgs[mi][1]["content"][pi] = {
+            "type": "text", "text": "(image shown earlier; your observations are in the ledger)",
+        }

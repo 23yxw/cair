@@ -16,13 +16,17 @@ app = typer.Typer(add_completion=False, help="CAIR multimodal diagnosis agent")
 
 
 def _repo(settings: Settings, backend: str):
+    """Open the data backend. The case index (and the SQLite db) are built on first use."""
+    from .data.index import ensure_index
+    try:
+        ensure_index(settings.data_dir, settings.index_path)
+    except FileNotFoundError as e:
+        typer.echo(str(e), err=True)
+        raise typer.Exit(2)
     if backend == "sqlite":
         from .data.sql_repository import SqlCaseRepository
-        return SqlCaseRepository.from_sqlite(settings.sqlite_path)
+        return SqlCaseRepository.from_sqlite(settings.sqlite_path, index_path=settings.index_path)
     from .data.repository import FileCaseRepository
-    if not settings.index_path.exists():
-        typer.echo(f"index not found at {settings.index_path}; run `index` first", err=True)
-        raise typer.Exit(2)
     return FileCaseRepository.from_path(settings.index_path)
 
 
@@ -50,8 +54,13 @@ def build_db(out: Optional[Path] = None):
 def run(case: List[str] = typer.Option(..., "--case", "-c", help="case id(s) or 'all'"),
         backend: Optional[str] = None, findings: Optional[str] = None, critic: bool = False,
         out: Optional[Path] = None, max_tool_calls: Optional[int] = None, max_images: Optional[int] = None):
-    """Run the agent on one or more cases."""
+    """Run the agent on one or more cases. Writes runs/<timestamp>/<case>.jsonl, <case>.report.json and summary.json."""
     s = get_settings()
+    try:
+        s.require_llm()
+    except RuntimeError as e:
+        typer.echo(str(e), err=True)
+        raise typer.Exit(2)
     if max_tool_calls:
         s.max_tool_calls = max_tool_calls
     if max_images:
@@ -103,12 +112,12 @@ def eval(settings_list: str = typer.Option("S1,S2,S3", "--settings"), cases: str
 @app.command()
 def rejudge(out: Path):
     """Re-grade every <out>/S*/metrics.json with the LLM judge (reports are read from <case>.report.json)."""
-    from .data.index import load_index
+    from .data.index import ensure_index
     from .eval.judge import judge as judge_fn
     from .llm.client import LLMClient
     from .llm.schemas import DiagnosisReport
     s = get_settings()
-    labels = {lab.case_id: lab for lab in load_index(s.index_path).labels}
+    labels = {lab.case_id: lab for lab in ensure_index(s.data_dir, s.index_path).labels}
     llm = LLMClient(s)
     for p in sorted(out.glob("S*/metrics.json")):
         rows = json.loads(p.read_text(encoding="utf-8"))
