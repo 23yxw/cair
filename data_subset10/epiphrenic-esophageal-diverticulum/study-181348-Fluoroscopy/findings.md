@@ -1,0 +1,1 @@
+Barium swallow in LAO and RAO projections demonstrates a wide-neck outpouching from the distal esophagus just above the esophagogastric junction, consistent with an epiphrenic diverticulum. No hold-up of contrast, mucosal irregularity, or stricture is seen. Contrast passes freely into the stomach.

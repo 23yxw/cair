@@ -1,0 +1,1 @@
+Clinical photograph demonstrates epispadias with dorsal chordee and an abnormal appearance of the external genitalia, supporting an associated anomaly within the genitourinary -epispadias spectrum.Mild urine associated chemical dermatitis is also noted.

@@ -1,0 +1,1 @@
+Total calcium score is 1881.

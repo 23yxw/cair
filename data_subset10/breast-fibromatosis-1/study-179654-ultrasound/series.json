@@ -1,0 +1,24 @@
+{
+  "study_id": "study-179654",
+  "modality": "ultrasound",
+  "series": [
+    {
+      "series_id": 743268,
+      "caption": "Longitudinal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74884529,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 743269,
+      "caption": "Longitudinal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74884530,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

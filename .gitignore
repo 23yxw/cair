@@ -1,8 +1,7 @@
 # secrets
 .env
 
-# data (large, licensed separately) and build artifacts
-data_subset10/
+# local databases and packaged archives
 *.sqlite
 *.tar.gz
 

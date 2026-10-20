@@ -1,0 +1,24 @@
+{
+  "study_id": "study-179188",
+  "modality": "x-ray",
+  "series": [
+    {
+      "series_id": 741379,
+      "caption": "Frontal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74762949,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 741380,
+      "caption": "Frog-leg",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74762950,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

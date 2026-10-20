@@ -1,0 +1,24 @@
+{
+  "study_id": "study-181348",
+  "modality": "Fluoroscopy",
+  "series": [
+    {
+      "series_id": 749198,
+      "caption": "LAO",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 75306160,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 749199,
+      "caption": "RAO",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 75306161,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

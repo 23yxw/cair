@@ -1,0 +1,24 @@
+{
+  "study_id": "study-176679",
+  "modality": "Annotated image",
+  "series": [
+    {
+      "series_id": 732198,
+      "caption": "Lateral",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74107737,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 745090,
+      "caption": "Lateral",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 75013145,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

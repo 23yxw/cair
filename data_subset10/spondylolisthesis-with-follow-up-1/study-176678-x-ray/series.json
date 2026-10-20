@@ -1,0 +1,42 @@
+{
+  "study_id": "study-176678",
+  "modality": "x-ray",
+  "series": [
+    {
+      "series_id": 732194,
+      "caption": "Frontal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74107733,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 732195,
+      "caption": "Lateral",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74107734,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 732196,
+      "caption": "Flexion lateral",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74107735,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 732197,
+      "caption": "Extension lateral",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74107736,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

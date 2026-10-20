@@ -1,0 +1,1 @@
+Staging bone scan shows a focal uptake in right vertebra (probably T8).

@@ -1,0 +1,1 @@
+Due to the peripheral location of the lesion, it is not clearly visualized on standard craniocaudal and mediolateral oblique views. The lesion is partially demonstrated only on the cleavage view.

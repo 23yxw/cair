@@ -1,0 +1,78 @@
+{
+  "study_id": "study-183151",
+  "modality": "mri",
+  "series": [
+    {
+      "series_id": 755713,
+      "caption": "T2 fat sat",
+      "count": 17,
+      "position": 15,
+      "anchor_image_id": 75785756,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755719,
+      "caption": "Sagittal T2",
+      "count": 17,
+      "position": 8,
+      "anchor_image_id": 75785955,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755714,
+      "caption": "Sagittal T2 fat sat",
+      "count": 17,
+      "position": 8,
+      "anchor_image_id": 75785766,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755720,
+      "caption": "Axial T2",
+      "count": 30,
+      "position": 11,
+      "anchor_image_id": 75785975,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755718,
+      "caption": "Axial T2",
+      "count": 48,
+      "position": 13,
+      "anchor_image_id": 75785912,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755717,
+      "caption": "Sagittal T2",
+      "count": 30,
+      "position": 11,
+      "anchor_image_id": 75785880,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755715,
+      "caption": "Coronal T2",
+      "count": 72,
+      "position": 43,
+      "anchor_image_id": 75785818,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755716,
+      "caption": "Coronal T2",
+      "count": 22,
+      "position": 8,
+      "anchor_image_id": 75785855,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

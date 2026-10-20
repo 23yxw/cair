@@ -1,0 +1,15 @@
+{
+  "study_id": "study-181425",
+  "modality": "Annotated image",
+  "series": [
+    {
+      "series_id": 749518,
+      "caption": "",
+      "count": 3,
+      "position": 1,
+      "anchor_image_id": 75331329,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

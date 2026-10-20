@@ -1,0 +1,1 @@
+Confirmatory CT scan shows severe degenerative changes in the paravertebral space, in keeping with the presence of a big osteophyte. Multiple other degenerative changes are noted, similar to the larger one.

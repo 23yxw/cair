@@ -1,0 +1,60 @@
+{
+  "study_id": "study-183150",
+  "modality": "ct",
+  "series": [
+    {
+      "series_id": 755708,
+      "caption": "Axial C+ delayed",
+      "count": 265,
+      "position": 136,
+      "anchor_image_id": 75784406,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755706,
+      "caption": "Sagittal C+ arterial phase",
+      "count": 81,
+      "position": 43,
+      "anchor_image_id": 75784212,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755707,
+      "caption": "Coronal bone window",
+      "count": 20,
+      "position": 5,
+      "anchor_image_id": 75784255,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755705,
+      "caption": "Axial C+ arterial phase",
+      "count": 473,
+      "position": 262,
+      "anchor_image_id": 75783958,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755711,
+      "caption": "Coronal non-contrast",
+      "count": 21,
+      "position": 19,
+      "anchor_image_id": 75785389,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 755709,
+      "caption": "Sagittal C+ delayed",
+      "count": 111,
+      "position": 55,
+      "anchor_image_id": 75785314,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

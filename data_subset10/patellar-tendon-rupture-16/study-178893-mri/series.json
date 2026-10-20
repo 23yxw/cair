@@ -1,0 +1,51 @@
+{
+  "study_id": "study-178893",
+  "modality": "mri",
+  "series": [
+    {
+      "series_id": 740400,
+      "caption": "Coronal PD fat sat",
+      "count": 26,
+      "position": 13,
+      "anchor_image_id": 74705806,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 740401,
+      "caption": "Coronal PD",
+      "count": 26,
+      "position": 13,
+      "anchor_image_id": 74705832,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 740402,
+      "caption": "Sagittal PD fat sat",
+      "count": 30,
+      "position": 15,
+      "anchor_image_id": 74705860,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 740403,
+      "caption": "Sagittal PD",
+      "count": 30,
+      "position": 15,
+      "anchor_image_id": 74705890,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 740404,
+      "caption": "Axial PD fat sat",
+      "count": 42,
+      "position": 21,
+      "anchor_image_id": 74705926,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

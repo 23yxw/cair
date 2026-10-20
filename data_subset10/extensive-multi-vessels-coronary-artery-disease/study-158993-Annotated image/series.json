@@ -1,0 +1,24 @@
+{
+  "study_id": "study-158993",
+  "modality": "Annotated image",
+  "series": [
+    {
+      "series_id": 667334,
+      "caption": "Curved",
+      "count": 10,
+      "position": 8,
+      "anchor_image_id": 69275766,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 667335,
+      "caption": "Curved - annotated",
+      "count": 6,
+      "position": 5,
+      "anchor_image_id": 69275773,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

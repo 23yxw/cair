@@ -1,0 +1,15 @@
+{
+  "study_id": "study-179192",
+  "modality": "Annotated image",
+  "series": [
+    {
+      "series_id": 741401,
+      "caption": "Frontal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74763519,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

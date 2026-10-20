@@ -1,0 +1,33 @@
+{
+  "study_id": "study-180784",
+  "modality": "ct",
+  "series": [
+    {
+      "series_id": 747034,
+      "caption": "Axial bone window",
+      "count": 66,
+      "position": 33,
+      "anchor_image_id": 75151162,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 747035,
+      "caption": "Sagittal bone window",
+      "count": 49,
+      "position": 24,
+      "anchor_image_id": 75151219,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 747036,
+      "caption": "Coronal bone window",
+      "count": 49,
+      "position": 24,
+      "anchor_image_id": 75151268,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

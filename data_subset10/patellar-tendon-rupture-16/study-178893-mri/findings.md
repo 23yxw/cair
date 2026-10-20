@@ -1,0 +1,3 @@
+High-riding patella. Complete avulsion of the proximal patellar tendon from the inferior patellar pole with a fluid-filled tendon gap of approximately 2-2.5 cm. Background tendinosis with multifocal dystrophic calcification in the tendon remnant. No patellar bone marrow edema. Patellofemoral articular cartilage is preserved. The quadriceps tendon is intact.
+
+Extensive anterior knee subcutaneous and myofascial edema.

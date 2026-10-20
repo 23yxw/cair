@@ -1,0 +1,15 @@
+{
+  "study_id": "study-180783",
+  "modality": "Nuclear medicine",
+  "series": [
+    {
+      "series_id": 747033,
+      "caption": "",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 75151128,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

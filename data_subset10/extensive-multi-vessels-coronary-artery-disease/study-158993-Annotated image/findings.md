@@ -1,0 +1,1 @@
+Annotated images showing important coronary arteries along with their branches and significant stenosis points.

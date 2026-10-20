@@ -1,0 +1,24 @@
+{
+  "study_id": "study-179651",
+  "modality": "mammography",
+  "series": [
+    {
+      "series_id": 743267,
+      "caption": "CC",
+      "count": 55,
+      "position": 33,
+      "anchor_image_id": 74884507,
+      "video": false,
+      "video_url": null
+    },
+    {
+      "series_id": 743266,
+      "caption": "MLO",
+      "count": 55,
+      "position": 8,
+      "anchor_image_id": 74884427,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}

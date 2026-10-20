@@ -1,0 +1,7 @@
+This case shows a typical false positive of
+bone scan
+where
+degenerative changes
+show uptake of radiotracer
+1
+. In these cases usually a confirmatory imaging is required (CT or MRI).

@@ -117,8 +117,8 @@ cp .env.example .env
 # CAIR_MODEL 填端点 GET /v1/models 返回的 id；当前面试端点是 Qwen3.6-35B-A3B
 
 # 4. 数据
-# 把数据包解压到仓库根目录下的 data_subset10/（里面直接是各病例文件夹）
-# 放在别处也可以：在 .env 里把 CAIR_DATA_DIR 指向那个目录
+# 病例已经在仓库的 data_subset10/（里面直接是各病例文件夹）
+# 换一份数据也可以：在 .env 里把 CAIR_DATA_DIR 指向那个目录
 ```
 
 安装是否成功，跑一次测试即可（不需要端点，不消耗 token）：
@@ -127,7 +127,7 @@ cp .env.example .env
 pytest -q        # 45 passed
 ```
 
-`.env`、`data_subset10/`、`runs/` 都在 `.gitignore` 里，不会被提交。
+`.env` 和 `runs/` 在 `.gitignore` 里，不会被提交。`data_subset10/` 随仓库提供。
 
 ## 运行
 

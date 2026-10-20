@@ -1,0 +1,15 @@
+{
+  "study_id": "study-179186",
+  "modality": "x-ray",
+  "series": [
+    {
+      "series_id": 741378,
+      "caption": "Frontal",
+      "count": 1,
+      "position": 0,
+      "anchor_image_id": 74762948,
+      "video": false,
+      "video_url": null
+    }
+  ]
+}
